@@ -56,130 +56,123 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoScaffold(
-      body: Builder(
-        builder: (context) => Scaffold(
-          body: weather == null
-              ? const Center(child: CircularProgressIndicator())
-              : Stack(
-                  children: [
-                    // 🌤️ Gradient Sky Background
-                    Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFF81D4FA),
-                            Color(0xFF2196F3),
-                            Color(0xFF1976D2),
-                          ],
-                        ),
-                      ),
+    return Scaffold(
+      body: weather == null
+          ? const Center(child: CircularProgressIndicator())
+          : Stack(
+              children: [
+                // 🌤️ Gradient Sky Background
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFF81D4FA),
+                        Color(0xFF2196F3),
+                        Color(0xFF1976D2),
+                      ],
                     ),
-
-                    // 🌡️ Weather Info
-                    SafeArea(
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-
-                          children: [
-                            // 🏙️ City Name
-                            Text(
-                              city,
-                              style: const TextStyle(
-                                fontSize: 30,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              "${(weather!['main']['temp'] as num).toStringAsFixed(0)}°",
-                              style: const TextStyle(
-                                fontSize: 110,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                height: 1, // Increase line height
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            const SizedBox(height: 0),
-                            Text(
-                              weather!['weather'][0]['description'],
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    // 🧊 Draggable Curved Bottom Sheet
-                    DraggableScrollableSheet(
-                      initialChildSize: 0.4,
-                      minChildSize: 0.4,
-                      maxChildSize: 0.8,
-                      builder: (context, scrollController) {
-                        return Stack(
-                          children: [
-                            // 🎨 Curved background using CustomPaint
-                            CustomPaint(
-                              size: Size(
-                                MediaQuery.of(context).size.width,
-                                100,
-                              ),
-                              painter: CurvePainter(),
-                            ),
-
-                            // ⬆️ Drag handle
-                            Positioned(
-                              top: 50,
-                              left: 0,
-                              right: 0,
-                              child: Center(
-                                child: Container(
-                                  width: 40,
-                                  height: 7,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[400],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // 📄 Sheet content
-                            Padding(
-                              padding: const EdgeInsets.only(top: 60),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(40),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(16),
-                                child: ListView(
-                                  controller: scrollController,
-                                  // scrollDirection: Axis.horizontal,
-                                  children: _buildWeatherSlots(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-        ),
-      ),
+
+                // 🌡️ Weather Info
+                SafeArea(
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+
+                      children: [
+                        // 🏙️ City Name
+                        Text(
+                          city,
+                          style: const TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          "${(weather!['main']['temp'] as num).toStringAsFixed(0)}°",
+                          style: const TextStyle(
+                            fontSize: 110,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            height: 1, // Increase line height
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const SizedBox(height: 0),
+                        Text(
+                          weather!['weather'][0]['description'],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // 🧊 Draggable Curved Bottom Sheet
+                DraggableScrollableSheet(
+                  initialChildSize: 0.4,
+                  minChildSize: 0.4,
+                  maxChildSize: 0.8,
+                  builder: (context, scrollController) {
+                    return Stack(
+                      children: [
+                        // 🎨 Curved background using CustomPaint
+                        CustomPaint(
+                          size: Size(MediaQuery.of(context).size.width, 100),
+                          painter: CurvePainter(),
+                        ),
+
+                        // ⬆️ Drag handle
+                        Positioned(
+                          top: 50,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Container(
+                              width: 40,
+                              height: 7,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[400],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // 📄 Sheet content
+                        Padding(
+                          padding: const EdgeInsets.only(top: 60),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(40),
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(16),
+                            child: ListView(
+                              controller: scrollController,
+                              // scrollDirection: Axis.horizontal,c
+                              children: _buildWeatherSlots(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
     );
   }
 
